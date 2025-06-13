@@ -1,0 +1,23 @@
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
+
+brew services start mongodb/brew/mongodb-community
+
+https://www.mongodb.com/try/download/compass
+https://www.mongodb.com/try/download/compass
+
+mongod -version
+db version v8.0.10
+Build Info: {
+    "version": "8.0.10",
+    "gitVersion": "9d03076bb2d5147d5b6fe381c7118b0b0478b682",
+    "modules": [],
+    "allocator": "system",
+    "environment": {
+        "distarch": "aarch64",
+        "target_arch": "aarch64"
+    }
+}
+
+mongod --dbpath=data
+
+npm install mongoose@8.4.0 mongoose-currency@0.3.0
