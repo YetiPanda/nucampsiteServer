@@ -82,3 +82,10 @@ nucampsite> db.users.find().pretty();
   }
 ]
 nucampsite> 
+
+db.users.find()
+
+db.users.drop()
+
+post to .../signup THEN .../login
+{"username": "testuser", "password": "password", "firstname": "jesse", "lastname": "panda"}
