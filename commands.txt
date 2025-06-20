@@ -23,3 +23,62 @@ mongod --dbpath=data
 npm install mongoose@8.4.0 mongoose-currency@0.3.0
 
 npm install express-session@1.18.0 session-file-store@1.5.0
+
+
+function auth(req, res, next) {
+    console.log(req.session);
+
+    if (!req.session.user) {
+        const err = new Error('You are not authenticated!');
+        err.status = 401;
+        return next(err);
+    } else {
+        if (req.session.user === 'authenticated') {
+            return next();
+        } else {
+            const err = new Error('You are not authenticated!');
+            err.status = 401;
+            return next(err);
+        }
+    }
+}
+
+
+ mongosh
+Current Mongosh Log ID: 6855a833fc8bfb19b197fd77
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.2
+Using MongoDB:          8.0.10
+Using Mongosh:          2.5.2
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2025-06-11T23:23:00.851-05:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use nucampsite
+switched to db nucampsite
+nucampsite> db.users.find().pretty();
+[
+  {
+    _id: ObjectId('685578abd1c363568959f6c1'),
+    username: 'jesse',
+    password: 'password',
+    admin: false,
+    __v: 0
+  },
+  {
+    _id: ObjectId('6855a693cf7186a4ffe80bdd'),
+    admin: false,
+    username: 'testuser',
+    salt: 'edc37b2bb3d310f8db46a59d0d18a9bd50402f94beebe971a53dc4c556e6a7c8',
+    hash: '0492c7a5e06a8e88e1343c8777e1a183db3d856fc0819ce3b17a2fa5dc0e88f8568218994bad0473d28589f49b212c4a066039e26852fc41b9d91e737cb75e4d6fc5ac05c89edee278b6d75fd1f6df57f60681c0980c63390e789d25bdf11496fc852041e48b6cd42fc2363dc2d3f4805b5088ca34e9b740c37ded136a6f7f36e09fbbcb127a9dda7e91a492352dd243d313aa5cca7f70a468c88b1054a17a27facdfc71a2f55e6970b33bf79284c86feb1d5b6a28a9827769954183d854de57ab1e9c3b1f3c5866ddb9c9d616ec3cfc1011ba743d0c7f8a7f2c43fdc8de2cdba237a4c423b77a54a1a61292f78446dbd628d592f65d40a5d0ac5b24fd90ee023b102bffb06884fb4be8383a6805ea5ef6729c508c52b35a2c3d679f6df71e83547452de640815df142e127aedb6a453b166ba2da80245edbfcf0732dcf3f6608999c246caca157477f6e20ee0bdb0c8538d72f44ba1b6f52109aaa8328c765965905ef4c49a3b6846453bf09e2c2dceab4c49455313d2da810370c3b7f4399a08f8a178b66690a9550bf03517de95d6128dbce2ed78d25019bd13b070c8e3248cd33290f3eb0d4fb08e2a6d696c914f9f369b64b2373ef60aebcf7d3e4c92b0cd653797df3f93056bfdac07cd111da3ebfca18a1dc6232087319abdf34f730f860f4768431e6a7d23416aef44251bc1d990f063656dc9f03a04c1a11ec1b185',
+    __v: 0
+  }
+]
+nucampsite> 
