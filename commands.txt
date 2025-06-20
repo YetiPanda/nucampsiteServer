@@ -3,7 +3,7 @@ https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
 brew services start mongodb/brew/mongodb-community
 
 https://www.mongodb.com/try/download/compass
-https://www.mongodb.com/try/download/compass
+
 
 mongod -version
 db version v8.0.10
