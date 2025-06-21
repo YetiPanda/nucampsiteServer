@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors"); // Add CORS
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -23,6 +24,12 @@ connect.then(
 
 var app = express();
 
+// CORS configuration - Add this before other middleware
+app.use(cors({
+  origin: 'http://localhost:3001', // React dev server port
+  credentials: true
+}));
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -32,6 +39,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// Temporarily comment out authentication for development
+// You can re-enable this later for admin routes only
+/*
 function auth(req, res, next) {
   console.log(req.headers);
   const authHeader = req.headers.authorization;
@@ -58,6 +68,7 @@ function auth(req, res, next) {
 }
 
 app.use(auth);
+*/
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -67,23 +78,6 @@ app.use("/posts", postRouter);
 app.use("/categories", categoryRouter);
 app.use("/authors", authorRouter);
 
-function auth(req, res, next) {
-  console.log(req.session);
-
-  if (!req.session.user) {
-    const err = new Error("You are not authenticated!");
-    err.status = 401;
-    return next(err);
-  } else {
-    if (req.session.user === "authenticated") {
-      return next();
-    } else {
-      const err = new Error("You are not authenticated!");
-      err.status = 401;
-      return next(err);
-    }
-  }
-}
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
