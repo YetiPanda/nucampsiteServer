@@ -37,7 +37,7 @@ campsiteRouter
       })
       .catch((err) => next(err));
   })
-  .put(authenticate.verifyUser, (req, res) => {
+  .put((req, res) => {
     res.statusCode = 403;
     res.end("PUT operation not supported on /campsites");
   })
