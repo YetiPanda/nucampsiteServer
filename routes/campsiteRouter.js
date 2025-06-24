@@ -209,7 +209,7 @@ campsiteRouter
       })
       .catch((err) => next(err));
   })
-  .post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res) => {
+  .post(authenticate.verifyUser, (req, res) => {
     res.statusCode = 403;
     res.end(
       `POST operation not supported on /campsites/${req.params.campsiteId}/comments/${req.params.commentId}`
@@ -222,7 +222,7 @@ campsiteRouter
           if (
             campsite.comments
               .id(req.params.commentId)
-              .author._id.equals(req.user._id)
+              .author.equals(req.user._id)
           ) {
             if (req.body.rating) {
               campsite.comments.id(req.params.commentId).rating =
@@ -263,7 +263,7 @@ campsiteRouter
           if (
             campsite.comments
               .id(req.params.commentId)
-              .author._id.equals(req.user._id)
+              .author.equals(req.user._id)
           ) {
             campsite.comments.id(req.params.commentId).remove();
             campsite
